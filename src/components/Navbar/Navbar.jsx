@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef } from 'react'
+import React, { use, useEffect } from 'react'
 import './Navbar.css'
 import logo from '../../assets/logo.png'
 import search_icon from '../../assets/search_icon.svg'
@@ -9,7 +9,7 @@ import caret_icon from '../../assets/caret_icon.svg'
 const Navbar = () => {
 
   return (
-    <div ref={navRef} className='navbar'>
+    <div className='navbar'>
       <div className="navbar-left">
         <img src={logo} alt="" />
         <ul>
