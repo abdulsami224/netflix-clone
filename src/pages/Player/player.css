@@ -1,26 +1,99 @@
 .player {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    background: #0d0d0d;
+    color: white;
+    padding-bottom: 40px;
+    position: relative;
 }
 
+/* Back button */
 .player img {
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 50px;
+    width: 32px;         /* smaller size */
+    height: 32px;
     cursor: pointer;
+    z-index: 10;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
 }
 
+.player img:hover {
+    opacity: 1;
+}
+
+/* Video box */
 .player iframe {
-    border-radius: 10px;
+    border-radius: 12px;
+    margin-top: 70px;
+    width: 80%;           /* not full width */
+    max-width: 900px;     /* nice fixed max size */
+    height: 480px;        /* standard 16:9 box */
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    background: black;
 }
 
+/* Info wrapper */
 .player-info {
+    width: 80%;
+    max-width: 900px;
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Title */
+.player-info h2 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* Stats row */
+.player-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Overview */
+.player-overview {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ddd;
+}
+
+/* Genre tags */
+.player-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.player-tags span {
+    background: #1f1f1f;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.no-trailer {
+    margin-top: 70px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;              /* red highlight to show warning */
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: fit-content;
 }

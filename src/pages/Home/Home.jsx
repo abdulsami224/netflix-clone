@@ -11,7 +11,7 @@ import Footer from '../../components/Footer/Footer'
 const Home = () => {
   return (
     <div className='Home'>
-      <Navbar />
+      
       <div className="hero">
         <img src={hero_banner} alt="" className='banner-img' />
         <div className="hero-caption">

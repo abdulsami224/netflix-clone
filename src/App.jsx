@@ -1,16 +1,19 @@
-import React from 'react'
-import Home from './pages/Home/Home'
-import { Routes , Route } from 'react-router-dom'
-import Player from './pages/Player/Player'
-export const App = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/player/:id' element={<Player/>} />
-      </Routes>
-    </div>
-  )
-}
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home/Home";
+import Movies from "./pages/Movies/Movies";
+import TVShows from "./pages/TV_Shows/TV_Shows";
+import Player from "./pages/Player/Player";
 
-export default App
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/tv-shows" element={<TVShows />} />
+        <Route path="/player/:id" element={<Player />} />
+      </Route>
+    </Routes>
+  );
+}
