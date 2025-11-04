@@ -1,47 +1,117 @@
-import React, { useEffect, useState } from 'react'
-import './Player.css'
-import back_arrow_icon from '../../assets/back_arrow_icon.png'  
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "./Player.css";
+import back_arrow_icon from "../../assets/back_arrow_icon.png";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Player = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [apiData, setApiData] = useState({
-    name: '',
-    key: '',
-    published_at: '',
-    type: ''
-  })
+  const [videoKey, setVideoKey] = useState(null);
+  const [info, setInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhYmQ4YWYzOTc0NmY0ODFhMWQ5ZTk3NjkzOWFkZWIzNCIsIm5iZiI6MTc1OTI0NjYzOS41NjYwMDAyLCJzdWIiOiI2OGRiZjkyZjg1ZDZiOWFhYmNiOWFiMGEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.4MtJkklGb1fc1rcMIcemqpDGDE_gR4_TFbxXR2u-lnk'
-    }
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
   };
 
   useEffect(() => {
-     fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, options)
-      .then(res => res.json())
-      .then(res => setApiData(res.results[0]))
-      .catch(err => console.error(err));
-  }, [])
+    const fetchData = async () => {
+      try {
+        let videoRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+          options
+        );
+        let videoData = await videoRes.json();
+
+        if (!videoData.results || videoData.results.length === 0) {
+          videoRes = await fetch(
+            `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
+            options
+          );
+          videoData = await videoRes.json();
+        }
+
+        const trailer = videoData.results?.find(
+          (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+        );
+        setVideoKey(trailer ? trailer.key : null);
+
+        let detailRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+          options
+        );
+        let detailData = await detailRes.json();
+
+        if (detailData.success === false) {
+          detailRes = await fetch(
+            `https://api.themoviedb.org/3/tv/${id}?language=en-US`,
+            options
+          );
+          detailData = await detailRes.json();
+        }
+
+        setInfo(detailData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   return (
-    <div className='player'>
-      <img src={back_arrow_icon} alt="" onClick={() => {navigate(-2)}} />
-      <iframe src={`https://www.youtube.com/embed/${apiData.key}`} width='90%' height='90%'
-      title='trailer' frameBorder='0' allowFullScreen></iframe>
-      <div className='player-info'>
-        <p>{apiData.published_at.slice(0,10)}</p>
-        <p>{apiData.name}</p>
-        <p>{apiData.type}</p>
-      </div>
-    </div>
-  )
-}
+    <div className="player">
+      <img
+        src={back_arrow_icon}
+        alt="Back"
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      />
 
-export default Player
+      {loading ? null : videoKey ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${videoKey}`}
+          title="Trailer"
+          frameBorder="0"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <p className="no-trailer">Trailer not available</p>
+      )}
+
+      {info && (
+        <div className="player-info">
+          <h2>{info.title || info.name}</h2>
+          {info.tagline && <p className="tagline">“{info.tagline}”</p>}
+
+          <p className="player-overview">{info.overview}</p>
+
+          <div className="player-stats">
+            <span><strong>Release:</strong> {info.release_date || info.first_air_date}</span>
+            {info.runtime && <span><strong>Runtime:</strong> {info.runtime} min</span>}
+            {info.number_of_seasons && <span><strong>Seasons:</strong> {info.number_of_seasons}</span>}
+            {info.number_of_episodes && <span><strong>Episodes:</strong> {info.number_of_episodes}</span>}
+            <span><strong>⭐ {info.vote_average}</strong> ({info.vote_count} votes)</span>
+          </div>
+
+          <div className="player-tags">
+            {info.genres?.map((g) => (
+              <span key={g.id}>{g.name}</span>
+            ))}
+          </div>
+
+          <p><strong>Languages:</strong> {info.spoken_languages?.map(l => l.english_name).join(", ")}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Player;

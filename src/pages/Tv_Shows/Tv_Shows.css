@@ -1,0 +1,97 @@
+.tv-container {
+  padding: 100px 6%;
+  color: #fff;
+  background: #141414;
+  min-height: 100vh;
+}
+
+.tv-heading {
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.tv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.tv-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none; 
+  color: inherit;
+}
+
+.tv-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.tv-poster {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.tv-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0;
+  color: #fff;
+}
+
+.tv-rating {
+  font-size: 14px;
+  color: #ffcc00;
+}
+
+
+.loading,
+.error {
+  padding: 100px;
+  text-align: center;
+  color: #fff;
+  font-size: 24px;
+}
+
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.ant-pagination-item {
+  background-color: #121212 !important;
+  border: 1px solid white !important;
+}
+
+.ant-pagination-item a {
+  color: white !important;
+}
+
+.ant-pagination-item:hover {
+  border-color: rgb(184, 0, 0) !important;
+  background-color: rgb(184, 0, 0) !important;
+}
+
+.ant-pagination-item-active {
+  border-color: rgb(184, 0, 0) !important;
+  background-color: rgb(184, 0, 0) !important;
+}
+
+.ant-pagination-item-active a {
+  color: white !important;
+}
+
+.ant-pagination-prev button,
+.ant-pagination-next button {  
+  color: white !important;
+}
+
