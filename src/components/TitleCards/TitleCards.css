@@ -1,31 +1,150 @@
-.TitleCards{
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
-.TitleCards h2{
-    margin-bottom: 8px;
-}
-.cards-list{
-    display: flex;
-    gap: 10px;
-    overflow-x: scroll;
-}
-.cards-list::-webkit-scrollbar{
-    display: none;
-}
-.cards-list img{
-    width: 240px;
-    border-radius:4px;
-    cursor: pointer;
-}
-.cards-list .card{
-    position: relative;
+/* ───────────────────────────────────────────
+   TitleCards – Responsive + Scroll Indicator
+─────────────────────────────────────────── */
+
+.TitleCards {
+  padding: 0 4%;
+  margin-bottom: 2.5rem;
 }
 
-.cards-list .card p{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    text-decoration: none;
-    color: #fff;
+.TitleCards h2 {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  color: #e5e5e5;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Card Row ── */
+.cards-list {
+  display: flex;
+  gap: clamp(6px, 1.2vw, 12px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE */
+  cursor: grab;
+  padding-bottom: 6px;
+  /* Prevent vertical scroll hijack on mobile */
+  overscroll-behavior-x: contain;
+}
+
+.cards-list::-webkit-scrollbar {
+  display: none;               /* Chrome / Safari */
+}
+
+/* ── Individual Card ── */
+.card {
+  flex: 0 0 auto;
+  width: clamp(130px, 18vw, 220px);
+  text-decoration: none;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px 6px 0 0;
+}
+
+.card p {
+  font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  color: #ccc;
+  text-align: center;
+  padding: 4px 6px 6px;
+  background: #181818;
+  border-radius: 0 0 6px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+/* ── Custom Scroll Track (indicator bar) ── */
+.scroll-track {
+  position: relative;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  margin-top: 10px;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.scroll-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: clamp(32px, 12%, 60px);
+  height: 3px;
+  background: #e50914;          /* Netflix red */
+  border-radius: 2px;
+  transition: left 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── more-cards wrapper ── */
+.more-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* ────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+──────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .card {
+    width: clamp(120px, 22vw, 180px);
+  }
+}
+
+/* Large Mobile */
+@media (max-width: 768px) {
+  .TitleCards {
+    padding: 0 3%;
+  }
+
+  .card {
+    width: clamp(110px, 38vw, 160px);
+  }
+
+  .TitleCards h2 {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .TitleCards {
+    padding: 0 2.5%;
+  }
+
+  .card {
+    width: clamp(100px, 42vw, 140px);
+  }
+
+  .TitleCards h2 {
+    font-size: 0.95rem;
+  }
+
+  .scroll-thumb {
+    width: 40px;
+  }
 }

@@ -1,26 +1,41 @@
+/* ─────────────────────────────────────────
+   Navbar – Responsive (Desktop + Mobile)
+───────────────────────────────────────── */
+
 .navbar {
   width: 100%;
   padding: 20px 6%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: fixed;
+  top: 0;
   font-size: 14px;
   color: #e5e5e5;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
-  z-index: 1;
+  background-image: linear-gradient(180deg, rgba(0,0,0,0.7) 10%, transparent);
+  z-index: 100;
+  box-sizing: border-box;
+  flex-wrap: wrap;        /* allows mobile-menu to drop below */
 }
 
+.nav-dark {
+  background: #141414;
+}
+
+/* ── Left side ── */
 .navbar-left {
   display: flex;
   align-items: center;
   gap: 50px;
 }
 
-.navbar-left img {
+.nav-logo {
   width: 90px;
+  flex-shrink: 0;
 }
 
-.navbar-left ul {
+/* Desktop nav links */
+.nav-links {
   display: flex;
   list-style: none;
   gap: 20px;
@@ -28,36 +43,43 @@
   padding: 0;
 }
 
-.navbar-left ul a {
+.nav-links a {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-.navbar-left ul a li {
+.nav-links a li,
+.nav-links li {
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
   padding: 5px 10px;
   transition: color 0.3s ease;
+  list-style: none;
 }
 
-.navbar-left ul a li:hover {
-  color: #e50914; /* Netflix red hover */
+.nav-links a li:hover,
+.nav-links li:hover {
+  color: #e50914;
 }
 
+/* ── Right side ── */
 .navbar-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.navbar-right .icon {
-  font-size: 20px;
+.icons {
+  width: 20px;
   cursor: pointer;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.2s;
 }
+.icons:hover { opacity: 0.7; }
 
-.navbar-right .profile {
+.profile {
   width: 35px;
   border-radius: 4px;
   cursor: pointer;
@@ -68,35 +90,34 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  position: relative;
 }
 
+/* Dropdown */
 .navbar .dropdown {
   position: absolute;
-  top: 80%;
-  right: 6%;
+  top: calc(100% + 10px);
+  right: 0;
   width: max-content;
   background-color: #191919;
   padding: 14px 22px;
   border-radius: 2px;
   text-decoration: underline;
-  z-index: 1;
+  z-index: 200;
   display: none;
 }
 
 .navbar .dropdown p {
   font-size: 14px;
   cursor: pointer;
+  margin: 0;
 }
 
 .navbar-profile:hover .dropdown {
   display: block;
 }
 
-.nav-dark {
-  background: #141414;
-}
-
-
+/* Search input */
 .search-input {
   background: transparent;
   border: 1px solid white;
@@ -110,5 +131,143 @@
 }
 
 .search-input:focus {
-  border-color: #ff2b85;
+  border-color: #e50914;
+}
+
+/* ── Hamburger button (hidden on desktop) ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 201;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── Mobile drawer menu ── */
+.mobile-menu {
+  display: none;               /* hidden on desktop */
+  width: 100%;
+  flex-direction: column;
+  background: rgba(20, 20, 20, 0.97);
+  padding: 0 6%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.3s ease;
+  list-style: none;
+  margin: 0;
+}
+
+.mobile-menu.active {
+  max-height: 300px;
+  padding: 12px 6% 20px;
+}
+
+.mobile-menu a,
+.mobile-menu li {
+  text-decoration: none;
+  color: #e5e5e5;
+  list-style: none;
+  display: block;
+}
+
+.mobile-menu a li,
+.mobile-menu li {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.mobile-menu a li:hover,
+.mobile-menu li:hover {
+  color: #e50914;
+}
+
+/* ─────────────────────────────
+   RESPONSIVE BREAKPOINTS
+───────────────────────────── */
+
+/* Tablet: shrink gaps */
+@media (max-width: 1024px) {
+  .navbar-left {
+    gap: 24px;
+  }
+  .nav-links {
+    gap: 12px;
+  }
+}
+
+/* Mobile: hide nav links, show hamburger + drawer */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 5%;
+  }
+
+  /* Hide desktop links */
+  .nav-links {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Show mobile drawer */
+  .mobile-menu {
+    display: flex;
+  }
+
+  /* Hide bell & profile on very small screens to save space */
+  .navbar-profile {
+    display: none;
+  }
+
+  .search-input {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-logo {
+    width: 70px;
+  }
+
+  .search-input {
+    width: 90px;
+    font-size: 12px;
+  }
+
+  .navbar-right {
+    gap: 12px;
+  }
 }
