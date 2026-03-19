@@ -1,69 +1,246 @@
+/* ═══════════════════════════════════════════
+   Home.css — Fully Responsive
+   Breakpoints: 1024 | 768 | 480 | 360
+═══════════════════════════════════════════ */
+
+/* ── Page wrapper ── */
+.home {
+  background: #141414;
+  color: #e5e5e5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
 .hero {
-    position: relative;
+  position: relative;
+  height: 100vh;
+  min-height: 500px;
+  overflow: hidden;
 }
 
+/* ── Banner images (all stacked, crossfade) ── */
 .banner-img {
-    width: 100%;
-    mask-image: linear-gradient(to right, transparent, black 75%);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 75%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%),
+              linear-gradient(to right, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%),
+                      linear-gradient(to right, transparent 0%, black 40%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  z-index: 0;
+  pointer-events: none;
 }
 
+.banner-img.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ── Hero caption ── */
 .hero-caption {
-    position: absolute;
-    width: 100%;
-    padding-left: 6%;
-    bottom: 0;
-}
-.captio-img{
-    width: 90%;
-    max-width: 420px;
-    margin-bottom: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 6% 0 6%;
+  z-index: 2;
+  box-sizing: border-box;
 }
 
-.hero-caption p{
-    max-width: 700px;
-    font-size: 17px;
-    margin-bottom: 20px;
-    
+/* ── Slide info (fades on change) ── */
+.slide-info {
+  transition: opacity 0.4s ease;
+}
+.slide-info.caption-fade {
+  opacity: 0;
 }
 
-
-.hero-btns{
-    display: flex;
-    gap: 10px;
-    margin-bottom: 50px;
+/* ── Title image ── */
+.caption-img {
+  display: block;
+  width: clamp(160px, 30vw, 420px);
+  max-width: 90%;
+  margin-bottom: 16px;
 }
 
-.hero-btns .btn img{
-    width: 25px;
+/* ── Description ── */
+.hero-caption p {
+  max-width: min(700px, 85%);
+  font-size: clamp(13px, 1.6vw, 17px);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
 }
 
-.hero-btns .btn{
-    border: 0;
-    outline: 0;
-    padding: 8px 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.hero-btns .btn.dark-btn{
-    color: white;
-    background: rgba(109, 109, 110, 0.7);
-}
-.hero-btns .btn:hover{
-    background: #ffffffbf;
+/* ── Buttons ── */
+.hero-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
-.hero-btns .btn.dark-btn:hover{
-    background: rgba(109, 109, 110, 0.4);
+.hero-btns .btn {
+  border: 0;
+  outline: 0;
+  padding: clamp(6px, 1.2vw, 10px) clamp(12px, 2vw, 20px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 600;
+  color: #000;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
 }
 
+.hero-btns .btn img {
+  width: clamp(18px, 2vw, 25px);
+}
 
-.more-cards{
-    padding-left: 6%;
+.hero-btns .btn.dark-btn {
+  color: white;
+  background: rgba(109, 109, 110, 0.7);
+}
+
+.hero-btns .btn:hover       { background: #ffffffbf; }
+.hero-btns .btn.dark-btn:hover { background: rgba(109, 109, 110, 0.4); }
+
+/* ── Dot indicators ── */
+.hero-dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+  background: #e50914;
+  transform: scale(1.3);
+}
+
+/* ════════════════════════════
+   MORE CARDS
+════════════════════════════ */
+.more-cards {
+  padding: 30px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #141414;
+}
+
+/* ════════════════════════════
+   RESPONSIVE BREAKPOINTS
+════════════════════════════ */
+
+/* ── Large tablet ── */
+@media (max-width: 1024px) {
+  .hero-caption {
+    padding: 0 5% 0 5%;
+  }
+}
+
+/* ── Tablet / large mobile ── */
+@media (max-width: 768px) {
+  .hero {
+    height: 75vh;
+    min-height: 420px;
+  }
+
+  .hero-caption {
+    padding: 0 4% 0 4%;
+  }
+
+  .hero-caption p {
+    max-width: 95%;
+  }
+
+  .more-cards {
+    padding-top: 20px;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .hero {
+    height: 70vh;
+    min-height: 380px;
+  }
+
+  .hero-caption {
+    padding: 0 4% 0 4%;
+  }
+
+  .caption-img {
+    width: clamp(120px, 50vw, 220px);
+    margin-bottom: 10px;
+  }
+
+  .hero-caption p {
+    font-size: 12px;
+    margin-bottom: 14px;
+    /* Hide on very small screens to save space */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hero-btns {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .hero-dots {
+    margin-bottom: 12px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .more-cards {
+    padding-top: 16px;
+  }
+}
+
+/* ── Small phones ── */
+@media (max-width: 360px) {
+  .hero {
+    height: 65vh;
+    min-height: 340px;
+  }
+
+  .hero-btns .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .caption-img {
+    width: 45vw;
+  }
 }
