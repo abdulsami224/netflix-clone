@@ -6,16 +6,17 @@
 }
 
 .tv-heading {
-  font-size: 28px;
+  font-size: clamp(20px, 3vw, 28px);
   margin-bottom: 30px;
 }
 
 .tv-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 25px;
 }
 
+/* ── Card ── */
 .tv-card {
   display: flex;
   flex-direction: column;
@@ -25,34 +26,93 @@
   border-radius: 10px;
   padding: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none; 
+  text-decoration: none;
   color: inherit;
+  position: relative;
 }
 
 .tv-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Poster wrapper (for bookmark overlay) ── */
+.tv-poster-wrap {
+  position: relative;
+  width: 100%;
 }
 
 .tv-poster {
   width: 100%;
   border-radius: 8px;
-  margin-bottom: 10px;
+  display: block;
 }
 
-.tv-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 5px 0;
+/* ── Bookmark button ── */
+.bookmark-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.65);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  z-index: 3;
+}
+
+.bookmark-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Show on card hover */
+.tv-card:hover .bookmark-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Always visible when saved */
+.bookmark-btn.saved {
+  opacity: 1;
+  transform: scale(1);
+  color: #e50914;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.bookmark-btn:hover {
+  background: rgba(229, 9, 20, 0.85) !important;
+  color: #fff !important;
+}
+
+/* ── Text ── */
+.tv-title {
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: bold;
+  margin: 8px 0 4px;
+  color: #fff;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tv-rating {
-  font-size: 14px;
+  font-size: 13px;
   color: #ffcc00;
+  margin: 0;
 }
 
-
+/* ── States ── */
 .loading,
 .error {
   padding: 100px;
@@ -61,37 +121,36 @@
   font-size: 24px;
 }
 
-.ant-pagination {
+/* ── Pagination ── */
+.pagination-container {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
-  margin-top: 40px;
 }
 
 .ant-pagination-item {
   background-color: #121212 !important;
   border: 1px solid white !important;
 }
-
-.ant-pagination-item a {
-  color: white !important;
-}
-
-.ant-pagination-item:hover {
-  border-color: rgb(184, 0, 0) !important;
-  background-color: rgb(184, 0, 0) !important;
-}
-
-.ant-pagination-item-active {
-  border-color: rgb(184, 0, 0) !important;
-  background-color: rgb(184, 0, 0) !important;
-}
-
-.ant-pagination-item-active a {
-  color: white !important;
-}
-
+.ant-pagination-item a          { color: white !important; }
+.ant-pagination-item:hover      { border-color: #e50914 !important; background-color: #e50914 !important; }
+.ant-pagination-item-active     { border-color: #e50914 !important; background-color: #e50914 !important; }
+.ant-pagination-item-active a   { color: white !important; }
 .ant-pagination-prev button,
-.ant-pagination-next button {  
-  color: white !important;
+.ant-pagination-next button     { color: white !important; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .tv-container { padding: 90px 4%; }
+  .tv-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+  .bookmark-btn { opacity: 1; transform: scale(1); } /* always visible on touch */
 }
 
+@media (max-width: 480px) {
+  .tv-container { padding: 80px 3%; }
+  .tv-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+}
+
+@media (max-width: 360px) {
+  .tv-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}

@@ -10,6 +10,7 @@ import hero_banner2 from '../../assets/hero_banner2.jpg';
 import hero_banner3 from '../../assets/hero_banner3.jpg';
 import hero_banner4 from '../../assets/hero_banner4.jpg';
 import hero_banner5 from '../../assets/hero_banner5.jpg';
+import hero_banner6 from '../../assets/hero_banner6.jpg';
 import hero_title1  from '../../assets/hero_title1.png';
 
 const slides = [
@@ -22,6 +23,7 @@ const slides = [
   { banner: hero_banner3, description: 'Discovering his ties to a secret ancient order, a young man living in modern Istanbul embarks on a quest to save the city from an immortal enemy.' },
   { banner: hero_banner4, description: 'Discovering his ties to a secret ancient order, a young man living in modern Istanbul embarks on a quest to save the city from an immortal enemy.' },
   { banner: hero_banner5, description: 'Discovering his ties to a secret ancient order, a young man living in modern Istanbul embarks on a quest to save the city from an immortal enemy.' },
+  { banner: hero_banner6, description: 'Discovering his ties to a secret ancient order, a young man living in modern Istanbul embarks on a quest to save the city from an immortal enemy.' },
 ];
 
 const INTERVAL = 5000;

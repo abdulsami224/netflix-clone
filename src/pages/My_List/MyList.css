@@ -1,0 +1,172 @@
+/* ═══════════════════════════════
+   MyList.css — Matches TV Shows theme
+   Fully responsive
+═══════════════════════════════ */
+
+.mylist-container {
+  padding: 100px 6%;
+  color: #fff;
+  background: #141414;
+  min-height: 100vh;
+}
+
+.mylist-heading {
+  font-size: clamp(20px, 3vw, 28px);
+  margin-bottom: 30px;
+}
+
+/* ── Empty state ── */
+.mylist-empty {
+  text-align: center;
+  margin-top: 80px;
+  color: #aaa;
+}
+
+.mylist-empty p {
+  font-size: clamp(14px, 1.8vw, 18px);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.mylist-empty a {
+  color: #e50914;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mylist-empty a:hover {
+  text-decoration: underline;
+}
+
+/* ── Grid ── */
+.mylist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 25px;
+}
+
+/* ── Card ── */
+.mylist-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.mylist-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Poster wrap ── */
+.mylist-poster-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.mylist-poster {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* ── Remove button ── */
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: rgba(229, 9, 20, 0.85);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 3;
+  padding: 0;
+}
+
+.remove-btn svg {
+  width: 14px;
+  height: 14px;
+  display: none; /* hide bookmark svg, show X only */
+}
+
+.remove-x {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Show on hover */
+.mylist-card:hover .remove-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.remove-btn:hover {
+  background: #c00 !important;
+}
+
+/* ── Media badge ── */
+.media-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(229, 9, 20, 0.85);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Text ── */
+.mylist-title {
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: bold;
+  margin: 8px 0 4px;
+  color: #fff;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mylist-rating {
+  font-size: 13px;
+  color: #ffcc00;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .mylist-container { padding: 90px 4%; }
+  .mylist-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+  /* Always show remove btn on touch devices */
+  .remove-btn { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+  .mylist-container { padding: 80px 3%; }
+  .mylist-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+}
+
+@media (max-width: 360px) {
+  .mylist-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}

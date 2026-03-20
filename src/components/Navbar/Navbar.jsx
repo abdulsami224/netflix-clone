@@ -50,7 +50,7 @@ const Navbar = ({ showSearch = false, onSearch }) => {
           <Link to="/"><li>Home</li></Link>
           <Link to="/tv-shows"><li>TV Shows</li></Link>
           <Link to="/movies"><li>Movies</li></Link>
-          <li>My List</li>
+          <Link to="/my-list"><li>My List</li></Link>
         </ul>
       </div>
 
@@ -104,7 +104,7 @@ const Navbar = ({ showSearch = false, onSearch }) => {
         <Link to="/"        onClick={() => setMenuOpen(false)}><li>Home</li></Link>
         <Link to="/tv-shows" onClick={() => setMenuOpen(false)}><li>TV Shows</li></Link>
         <Link to="/movies"   onClick={() => setMenuOpen(false)}><li>Movies</li></Link>
-        <li onClick={() => setMenuOpen(false)}>My List</li>
+        <Link to="/my-list"   onClick={() => setMenuOpen(false)}><li>My List</li></Link>
       </div>
 
     </div>
