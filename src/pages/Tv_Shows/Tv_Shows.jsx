@@ -73,7 +73,7 @@ const Tv_Shows = () => {
   };
 
   const toggleMyList = (e, show) => {
-    e.preventDefault(); // prevent Link navigation
+    e.preventDefault();
     e.stopPropagation();
     const item = {
       id: show.id,
@@ -108,26 +108,22 @@ const Tv_Shows = () => {
                 alt={show.name}
                 className="tv-poster"
               />
-              {/* Bookmark icon */}
               <button
                 className={`bookmark-btn ${isSaved(show.id) ? "saved" : ""}`}
                 onClick={(e) => toggleMyList(e, show)}
                 title={isSaved(show.id) ? "Remove from My List" : "Add to My List"}
               >
                 {isSaved(show.id) ? (
-                  // Filled bookmark
                   <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M5 3h14a1 1 0 0 1 1 1v17.27a.5.5 0 0 1-.78.42L12 17.27l-7.22 4.42A.5.5 0 0 1 4 21.27V4a1 1 0 0 1 1-1z"/>
                   </svg>
                 ) : (
-                  // Outline bookmark
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M5 3h14a1 1 0 0 1 1 1v17.27a.5.5 0 0 1-.78.42L12 17.27l-7.22 4.42A.5.5 0 0 1 4 21.27V4a1 1 0 0 1 1-1z"/>
                   </svg>
                 )}
               </button>
-              
-              <span className="media-badge">Tv Shows</span>  
+              <span className="media-badge">TV</span>
             </div>
             <h3 className="tv-title">{show.name}</h3>
             <p className="tv-rating">⭐ {show.vote_average.toFixed(1)}</p>
