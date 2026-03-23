@@ -17,10 +17,6 @@ const Movies = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // TMDB is fixed at 20 per page. To show 24, we fetch 2 consecutive
-  // TMDB pages and slice the combined results to 24.
-  const PAGE_SIZE = 24;
-
   const fetchMovies = async (pageNum = 1, query = "") => {
     try {
       setLoading(true);
@@ -32,27 +28,15 @@ const Movies = () => {
         },
       };
 
-      // Our page N maps to TMDB pages (2N-1) and (2N)
-      const tmdbPage1 = pageNum * 2 - 1;
-      const tmdbPage2 = pageNum * 2;
+      const endpoint = query
+        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageNum}&include_adult=false`
+        : `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNum}&sort_by=popularity.desc`;
 
-      const makeUrl = (p) =>
-        query
-          ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${p}&include_adult=false`
-          : `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${p}&sort_by=popularity.desc`;
-
-      const [res1, res2] = await Promise.all([
-        fetch(makeUrl(tmdbPage1), options),
-        fetch(makeUrl(tmdbPage2), options),
-      ]);
-
-      if (!res1.ok) throw new Error("Failed to fetch movies");
-
-      const [data1, data2] = await Promise.all([res1.json(), res2.ok ? res2.json() : { results: [] }]);
-
-      const combined = [...(data1.results || []), ...(data2.results || [])];
-      setMovies(combined.slice(0, PAGE_SIZE));
-      setTotalResults(data1.total_results || 0);
+      const res = await fetch(endpoint, options);
+      if (!res.ok) throw new Error("Failed to fetch movies");
+      const data = await res.json();
+      setMovies(data.results || []);
+      setTotalResults(data.total_results || 0);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -109,8 +93,6 @@ const Movies = () => {
                   alt={movie.title}
                   className="movie-poster"
                 />
-
-                {/* Bookmark icon */}
                 <button
                   className={`bookmark-btn ${isSaved(movie.id) ? "saved" : ""}`}
                   onClick={(e) => toggleMyList(e, movie)}
@@ -126,11 +108,8 @@ const Movies = () => {
                     </svg>
                   )}
                 </button>
-
-                {/* Movie badge */}
                 <span className="media-badge">Movie</span>
               </div>
-
               <h3 className="movie-title">{movie.title}</h3>
               <p className="movie-rating">⭐ {movie.vote_average.toFixed(1)}</p>
             </Link>
@@ -143,7 +122,7 @@ const Movies = () => {
       <div className="pagination-container">
         <Pagination
           current={page}
-          pageSize={PAGE_SIZE}
+          pageSize={20}
           total={Math.min(totalResults, 10000)}
           onChange={(pageNum) => setPage(pageNum)}
           showSizeChanger={false}
